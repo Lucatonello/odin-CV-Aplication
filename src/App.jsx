@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { person } from './data.js';
 
+
 function App() {
   const [formData, setFormData] = useState(person);
 
@@ -39,6 +40,47 @@ function App() {
       experience: updatedExperience
     }));
   }
+  function addNewEducation(status) {
+    let newEducation = {
+      school: '',
+      major: '',
+      date: ''
+    }
+    setFormData(prevState => ({
+      ...prevState,
+      education: [...prevState.education, newEducation]
+    }));
+    if (status == true) {
+      removeLastEducation();
+    }
+  }
+  function addNewExperience(status) {
+    let newExperience = {
+      company: '',
+      position: '',
+      responsibilities: '',
+      date: ''
+    }
+    setFormData(prevState => ({
+      ...prevState,
+      experience: [...prevState.experience, newExperience]
+    }));
+    if (status === true) {
+      removeLastExperience();
+    }
+  }
+  function removeLastEducation() {
+    setFormData(prevState => ({
+      ...prevState,
+      education: prevState.education.slice(0, 1)
+    }));
+  }
+  function removeLastExperience() {
+    setFormData(prevState => ({
+      ...prevState,
+      experience: prevState.experience.slice(0, 1)
+    }));
+  }
  
   return (
     <div className="page-wrapper">
@@ -64,7 +106,7 @@ function App() {
 
         <label htmlFor="Email">Email</label>
         <input 
-          type="text"
+          type="email"
           id="email"
           name="email"
           value={formData.generalInfo.email}
@@ -73,7 +115,7 @@ function App() {
 
         <label htmlFor="Phone">Phone</label>
         <input 
-          type="text"
+          type="number"
           id="phone"
           name="phone"
           value={formData.generalInfo.phone}
@@ -108,8 +150,10 @@ function App() {
               value={edu.date}
               onChange={(e) => handleEducationChange(e, index)}
            />
-        </div>
+        </div> 
         ))}
+        <button onClick={addNewEducation} id="add-education"  type="button">Add education</button>
+        <button onClick={() => addNewEducation(true)} type='button'>Remove</button>
 
         <h3>Experience</h3>
         {formData.experience.map((xp, index) => (
@@ -152,7 +196,8 @@ function App() {
            />
           </div>
         ))}
-        
+        <button onClick={addNewExperience} type='button'>Add experience</button>
+        <button onClick={() => addNewExperience(true)} type='button'>Remove</button>
       </div>
 
       <div className="cv-container">
@@ -160,16 +205,16 @@ function App() {
         <h2>{formData.generalInfo.ocupation}</h2>
 
         <p><b>Email: </b>{formData.generalInfo.email}</p>
-        <p><b>Phone: </b>{formData.generalInfo.phone} </p>
+        <p><b>Phone: </b>+{formData.generalInfo.phone} </p>
 
         <h1>Education</h1>
 
         <hr />
         {formData.education.map((edu, index) => (
-          <div key={index}> 
+          <div id="cv-education" key={index}> 
             <p><b>School: </b>{edu.school}</p>
             <p><b>Major: </b>{edu.major}</p>
-            <p><b>Date: </b>{edu.date}</p>
+            <p className='last-date'><b>Date: </b>{edu.date}</p>
           </div>
         ))}
         
@@ -181,11 +226,9 @@ function App() {
             <p><b>company: </b>{xp.company}</p>
             <p><b>position: </b>{xp.position}</p>
             <p><b>responsabilities: </b>{xp.responsibilities}</p>
-            <p><b>date: </b>{xp.date}</p>
+            <p className='last-date'><b>date: </b>{xp.date}</p>
           </div>
         ))}
-    
-        
       </div>
     </div>
   )

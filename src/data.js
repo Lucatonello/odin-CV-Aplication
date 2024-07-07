@@ -1,35 +1,24 @@
 export const person = {
     generalInfo: {
-      name: 'John',
-      ocupation: 'Software engineer',
-      email: 'john@gmail.com',
-      phone: '555-555-555',
+      name: '',
+      ocupation: '',
+      email: '',
+      phone: '',
     },
     education: [
     {
-      school: 'Harvard',
-      major: 'BS in Computer Science',
-      date: '2014-2018'
+      school: '',
+      major: '',
+      date: ''
     },
-    {
-      school: 'Phillips Academy Andover',
-      major: 'High school diploma',
-      date: '2009-2013'
-    }
     ],
     experience: [
     {
-      company: 'Google',
-      position: 'Software Engineer',
-      responsibilities: 'Mantain and improve existing code',
-      date: '2019-2022' 
+      company: '',
+      position: '',
+      responsibilities: '',
+      date: '' 
     },
-    {
-      company: 'Open AI',
-      position: 'Software Engineer',
-      responsibilities: 'Mantain code and add new features',
-      date: '2022-Present'
-    }
     ],
   };
   

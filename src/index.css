@@ -36,21 +36,27 @@ body {
   flex-direction: column;
 }
 .last-date {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 .cv-container {
   border: 1px solid #213547;
   padding: 20px;
+  padding-bottom: 0px;
   margin: 0px 80px 0px 0px ;
   padding-top: 0px;
   box-sizing: border-box;
   max-width: 100%;
   width: 700px;
   background-color: white;
+  height: 100%;
 } 
 
 #name {
   margin-bottom: 0px;
+}
+input {
+  border-radius: 5px;
+  border: 1px solid #213547;
 }
 h2 {
   margin-top: 0px;
@@ -60,7 +66,7 @@ h1 {
   line-height: 1.1;
 }
 h3 {
-  margin-top: 20px;
+  margin-top: 0px;
   margin-bottom: 0px;
 }
 
@@ -69,6 +75,7 @@ button {
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
+  margin-top: 10px;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
@@ -92,6 +99,6 @@ button:focus-visible {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: rgba(52, 61, 234, 0.233);
   }
 }
