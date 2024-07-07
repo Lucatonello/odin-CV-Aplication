@@ -2,40 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import { person } from './data.js';
 
-function Background({ type, content }) {
-  if (type === 'education') {
-    return (
-      <div class="education-container">
-        {content.map((elem, index) => (
-          <div key={index} className="education">
-            <p><b>School: </b>{elem.school}</p>
-            <p><b>Major: </b>{elem.major}</p>
-            <p><b>Date: </b>{elem.date}</p>
-          </div>
-        ))} 
-      </div>
-    );
-  }
-  else if (type === 'experience') {
-    return (
-      <div className="experience-container">
-        {content.map((elem, index) => (
-          <div key={index} className="experience">
-            <p><b>Company: </b>{elem.company}</p>
-            <p><b>Position: </b>{elem.position}</p>
-            <p><b>Responsabilities: </b>{elem.responsibilities}</p>
-            <p><b>Date: </b>{elem.date}</p>
-          </div>
-        ))} 
-      </div>
-    )
-  }
-  else {
-    return null;
-  }
-}
-
-
 function App() {
   const [formData, setFormData] = useState(person);
 
@@ -48,9 +14,32 @@ function App() {
         [name]: value
       }
     }));
-    
   }
-  console.log(formData.generalInfo.name);
+  function handleEducationChange(e, index) {
+    const { name, value } = e.target;
+    const updatedEducation = [...formData.education];
+    updatedEducation[index] = {
+      ...updatedEducation[index],
+      [name]: value
+    };
+    setFormData(prevState => ({
+      ...prevState,
+      education: updatedEducation
+    }));
+  }
+  function handleExperienceChange(e, index) {
+    const { name, value } = e.target;
+    const updatedExperience = [...formData.experience];
+    updatedExperience[index] = {
+      ...updatedExperience[index],
+      [name]: value
+    };
+    setFormData(prevState => ({
+      ...prevState,
+      experience: updatedExperience
+    }));
+  }
+ 
   return (
     <div className="page-wrapper">
       <div className="input-container">
@@ -65,52 +54,138 @@ function App() {
         />
 
         <label htmlFor="Ocupation">Ocupation</label>
-        <input type="text" />
+        <input 
+          type="text"
+          id="ocupation"
+          name="ocupation"
+          value={formData.generalInfo.ocupation}
+          onChange={handleInputChange}
+        />
 
         <label htmlFor="Email">Email</label>
-        <input type="text" />
+        <input 
+          type="text"
+          id="email"
+          name="email"
+          value={formData.generalInfo.email}
+          onChange={handleInputChange}
+         />
 
         <label htmlFor="Phone">Phone</label>
-        <input type="text" />
+        <input 
+          type="text"
+          id="phone"
+          name="phone"
+          value={formData.generalInfo.phone}
+          onChange={handleInputChange}
+         />
   
         <h3>Education</h3>
-        <label htmlFor="School">School</label>
-        <input type="text" />
-
-        <label htmlFor="Major">Major</label>
-        <input type="text" />
-
-        <label htmlFor="Date">Date</label>
-        <input type="text" />
+        {formData.education.map((edu, index) => (
+          <div className='edu-xp-input' key={index}>
+            <label htmlFor={`school_${index}`}>School</label>
+            <input 
+              type="text"
+              id={`school_${index}`}
+              name="school"
+              value={edu.school}
+              onChange={(e) => handleEducationChange(e, index)}
+            />
+            <label htmlFor="Major">Major</label>
+            <input 
+              type="text"
+              id={`major_${index}`}
+              name="major"
+              value={edu.major}
+              onChange={(e) => handleEducationChange(e, index)}
+           />
+           <label htmlFor="Date">Date</label>
+           <input 
+              type="text"
+              className='last-date'
+              id={`date${index}`}
+              name="date"
+              value={edu.date}
+              onChange={(e) => handleEducationChange(e, index)}
+           />
+        </div>
+        ))}
 
         <h3>Experience</h3>
-        <label htmlFor="Company">Company</label>
-        <input type="text" />
+        {formData.experience.map((xp, index) => (
+          <div className='edu-xp-input' key={index}>
+            <label htmlFor="Company">Company</label>
+            <input 
+              type="text"
+              id={`company${index}`}
+              name="company"
+              value={xp.company}
+              onChange={(e) => handleExperienceChange(e, index)}
+           />
 
-        <label htmlFor="Position">Position</label>
-        <input type="text" />
+            <label htmlFor="Position">Position</label>
+            <input 
+              type="text"
+              id={`position${index}`}
+              name="position"
+              value={xp.position}
+              onChange={(e) => handleExperienceChange(e, index)}
+           />
 
-        <label htmlFor="Responsabilities">Responsabilities</label>
-        <input type="text" />
+            <label htmlFor="Responsibilities">responsibilities</label>
+            <input 
+              type="text"
+              id={`responsibilities${index}`}
+              name="responsibilities"
+              value={xp.responsibilities}
+              onChange={(e) => handleExperienceChange(e, index)}
+           />
 
-        <label htmlFor="Date">Date</label>
-        <input type="text" />
+            <label htmlFor="Date">Date</label>
+            <input 
+              type="text"
+              className='last-date'
+              id={`date${index}`}
+              name="date"
+              value={xp.date}
+              onChange={(e) => handleExperienceChange(e, index)}
+           />
+          </div>
+        ))}
+        
       </div>
 
       <div className="cv-container">
         <h1 id="name">{formData.generalInfo.name}</h1>
-        <h2>{person.generalInfo.ocupation}</h2>
+        <h2>{formData.generalInfo.ocupation}</h2>
 
-        <p><b>Email: </b>{person.generalInfo.email}</p>
-        <p><b>Phone: </b>{person.generalInfo.phone} </p>
+        <p><b>Email: </b>{formData.generalInfo.email}</p>
+        <p><b>Phone: </b>{formData.generalInfo.phone} </p>
 
         <h1>Education</h1>
+
         <hr />
-        <Background type="education" content={person.education} />
+        {formData.education.map((edu, index) => (
+          <div key={index}> 
+            <p><b>School: </b>{edu.school}</p>
+            <p><b>Major: </b>{edu.major}</p>
+            <p><b>Date: </b>{edu.date}</p>
+          </div>
+        ))}
+        
 
         <h1>Experience</h1>
         <hr />
-        <Background type="experience" content={person.experience} />
+        {formData.experience.map((xp, index) => (
+          <div key={index}>
+            <p><b>company: </b>{xp.company}</p>
+            <p><b>position: </b>{xp.position}</p>
+            <p><b>responsabilities: </b>{xp.responsibilities}</p>
+            <p><b>date: </b>{xp.date}</p>
+          </div>
+        ))}
+    
+        
       </div>
     </div>
   )
